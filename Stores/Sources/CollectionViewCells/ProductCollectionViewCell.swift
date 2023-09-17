@@ -36,7 +36,12 @@ class ProductCollectionViewCell: UICollectionViewCell {
         } else {
             discountLabel.isHidden = true
         }
-        productActualPrice.attributedText =  details?.actual_price?.strikeThrough()
+        if let offerPrice = details?.offer_price, let actualPrice = details?.actual_price, offerPrice == actualPrice {
+            productActualPrice.isHidden = true
+        } else {
+            productActualPrice.isHidden = false
+            productActualPrice.attributedText =  details?.actual_price?.strikeThrough()
+        }
         productOfferPriceLabel.text = details?.offer_price
         productName.text = details?.name
         guard let productImageUrl = URL(string: (details?.image!)!) else {
